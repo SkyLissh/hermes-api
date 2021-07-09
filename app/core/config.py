@@ -1,6 +1,9 @@
 import os
+from dotenv import load_dotenv
 from typing import Union, Optional, Any, Mapping
 from pydantic import BaseSettings, AnyHttpUrl, validator, PostgresDsn
+
+load_dotenv()
 
 
 class Settings(BaseSettings):
@@ -25,11 +28,12 @@ class Settings(BaseSettings):
 
     PROJECT_NAME: str = "Hermes API"
 
-    POSTGRES_SERVER: str = os.getenv('POSTGRES_SERVER')
-    POSTGRES_USER: str = os.getenv('POSTGRES_USER')
-    POSTGRES_PASSWORD: str = os.getenv('POSTGRES_PASSWORD')
-    POSTGRES_DB: str = os.getenv('POSTGRES_DB')
-    SQLALCHEMY_DATABASE_URI: Optional[PostgresDsn] = None
+    SQLALCHEMY_DATABASE_URI = PostgresDsn.build(
+            scheme='postgresql',
+            user=os.getenv('POSTGRES_USER'),
+            password=os.getenv('POSTGRES_PASSWORD'),
+            host=os.getenv('POSTGRES_SERVER'),
+            path='/' + os.getenv('POSTGRES_DB'))
 
     @classmethod
     @validator('SQLALCHEMY_DATABASE_URI', pre=True)

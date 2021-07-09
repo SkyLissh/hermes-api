@@ -2,7 +2,7 @@ from typing import Generator
 
 from sqlalchemy.orm import Session
 
-from app.core.db import SessionLocal
+from app.core.db.session import SessionLocal
 
 
 def get_db() -> Generator:
