@@ -1,6 +1,7 @@
 from typing import Any
 from sqlalchemy import MetaData
 from sqlalchemy.orm import DeclarativeMeta, registry
+from sqlalchemy.util import classproperty
 
 mapper_registry = registry()
 
@@ -13,6 +14,6 @@ class Base(metaclass=DeclarativeMeta):
     registry: registry = mapper_registry
     metadata: MetaData = mapper_registry.metadata
 
-    @classmethod
+    @classproperty
     def __tablename__(cls) -> str:
         return cls.__name__.lower()
