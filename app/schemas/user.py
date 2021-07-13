@@ -2,11 +2,14 @@ from typing import Optional
 
 from pydantic import BaseModel, EmailStr
 
+from app.schemas.member import Member
+
 
 # Shared properties
 class UserBase(BaseModel):
-    email: Optional[EmailStr] = None
     username: Optional[str] = None
+    picture: Optional[str] = None
+    email: Optional[EmailStr] = None
     email_verified: bool = False
 
 
@@ -22,6 +25,7 @@ class UserUpdate(UserBase):
     password: Optional[str] = None
 
 
+# Properties stored in DB
 class UserInDBBase(UserBase):
     id: Optional[int] = None
 
@@ -31,7 +35,7 @@ class UserInDBBase(UserBase):
 
 # Additional properties to return via API
 class User(UserBase):
-    pass
+    chats: Optional[list[Member]] = None
 
 
 # Additional properties stored in DB

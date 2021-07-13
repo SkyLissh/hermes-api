@@ -13,4 +13,3 @@ class User(Base):
     email_verified = Column(Boolean, default=False, nullable=False)
 
     chats = relationship('Member', back_populates='user')
-    messages = relationship('Message')
